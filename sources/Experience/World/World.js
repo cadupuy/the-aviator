@@ -17,20 +17,10 @@ export default class World {
     this.resources.on('ready', () => {
       // Setup
       this.sky = new Sky();
-
-      this.sky.mesh.position.y = -600;
-      this.scene.add(this.sky.mesh);
-      this.airplane = new AirPlane();
-
-      this.airplane.mesh.scale.set(0.25, 0.25, 0.25);
-      this.airplane.mesh.position.y = 100;
-      this.scene.add(this.airplane.mesh);
-
-      this.pilot = new Pilot();
-
-      this.sea = new Sea();
-
       this.environment = new Environment();
+      this.sea = new Sea();
+      this.airplane = new AirPlane();
+      this.pilot = new Pilot();
     });
 
     //add the listener

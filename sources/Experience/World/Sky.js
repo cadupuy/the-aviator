@@ -7,12 +7,13 @@ export default class Sky {
     this.experience = new Experience();
     this.scene = this.experience.scene;
 
-    this.setMesh();
+    this.setGroup();
   }
 
-  setMesh() {
+  setGroup() {
     // Create an empty container
-    this.mesh = new THREE.Object3D();
+
+    this.group = new THREE.Group();
 
     // choose a number of clouds to be scattered in the sky
     this.nClouds = 20;
@@ -33,26 +34,29 @@ export default class Sky {
       // Trigonometry!!! I hope you remember what you've learned in Math :)
       // in case you don't:
       // we are simply converting polar coordinates (angle, distance) into Cartesian coordinates (x, y)
-      cloud.mesh.position.y = Math.sin(finalAngle) * distance;
-      cloud.mesh.position.x = Math.cos(finalAngle) * distance;
+      cloud.group.position.y = Math.sin(finalAngle) * distance;
+      cloud.group.position.x = Math.cos(finalAngle) * distance;
 
       // rotate the cloud according to its position
-      cloud.mesh.rotation.z = finalAngle + Math.PI / 2;
+      cloud.group.rotation.z = finalAngle + Math.PI / 2;
 
       // for a better result, we position the clouds
       // at random depths inside of the scene
-      cloud.mesh.position.z = -400 - Math.random() * 400;
+      cloud.group.position.z = -400 - Math.random() * 400;
 
       // we also set a random scale for each cloud
       const scale = 1 + Math.random() * 2;
-      cloud.mesh.scale.set(scale, scale, scale);
+      cloud.group.scale.set(scale, scale, scale);
 
       // do not forget to add the mesh of each cloud in the scene
-      this.mesh.add(cloud.mesh);
+      this.group.add(cloud.group);
     }
+
+    this.group.position.y = -600;
+    this.scene.add(this.group);
   }
 
   update() {
-    this.mesh.rotation.z += 0.01;
+    this.group.rotation.z += 0.01;
   }
 }

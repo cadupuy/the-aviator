@@ -12,7 +12,7 @@ export default class AirPlane {
   }
 
   setMesh() {
-    this.mesh = new THREE.Object3D();
+    this.group = new THREE.Group();
 
     // Cockpit
 
@@ -37,7 +37,7 @@ export default class AirPlane {
     const cockpit = new THREE.Mesh(geomCockpit, matCockpit);
     cockpit.castShadow = true;
     cockpit.receiveShadow = true;
-    this.mesh.add(cockpit);
+    this.group.add(cockpit);
 
     // Create the engine
     const geomEngine = new THREE.BoxGeometry(20, 50, 50, 1, 1, 1);
@@ -49,7 +49,7 @@ export default class AirPlane {
     engine.position.x = 40;
     engine.castShadow = true;
     engine.receiveShadow = true;
-    this.mesh.add(engine);
+    this.group.add(engine);
 
     // Create the tail
     const geomTailPlane = new THREE.BoxGeometry(15, 20, 5, 1, 1, 1);
@@ -61,7 +61,7 @@ export default class AirPlane {
     tailPlane.position.set(-35, 25, 0);
     tailPlane.castShadow = true;
     tailPlane.receiveShadow = true;
-    this.mesh.add(tailPlane);
+    this.group.add(tailPlane);
 
     // Create the wing
     const geomSideWing = new THREE.BoxGeometry(40, 8, 150, 1, 1, 1);
@@ -72,7 +72,7 @@ export default class AirPlane {
     const sideWing = new THREE.Mesh(geomSideWing, matSideWing);
     sideWing.castShadow = true;
     sideWing.receiveShadow = true;
-    this.mesh.add(sideWing);
+    this.group.add(sideWing);
 
     // propeller
     const geomPropeller = new THREE.BoxGeometry(20, 10, 10, 1, 1, 1);
@@ -97,7 +97,11 @@ export default class AirPlane {
     blade.receiveShadow = true;
     this.propeller.add(blade);
     this.propeller.position.set(50, 0, 0);
-    this.mesh.add(this.propeller);
+    this.group.add(this.propeller);
+
+    this.group.scale.set(0.25, 0.25, 0.25);
+    this.group.position.y = 100;
+    this.scene.add(this.group);
   }
 
   update(mousePos) {
@@ -110,11 +114,11 @@ export default class AirPlane {
     const targetX = normalize(mousePos.x, -0.75, 0.75, -100, 100);
 
     // Move the plane at each frame by adding a fraction of the remaining distance
-    this.mesh.position.y += (targetY - this.mesh.position.y) * 0.1;
+    this.group.position.y += (targetY - this.group.position.y) * 0.1;
 
     // Rotate the plane proportionally to the remaining distance
-    this.mesh.rotation.z = (targetY - this.mesh.position.y) * 0.0128;
-    this.mesh.rotation.x = (this.mesh.position.y - targetY) * 0.0064;
+    this.group.rotation.z = (targetY - this.group.position.y) * 0.0128;
+    this.group.rotation.x = (this.group.position.y - targetY) * 0.0064;
 
     this.propeller.rotation.x += 0.3;
   }

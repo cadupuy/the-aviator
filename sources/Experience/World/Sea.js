@@ -13,13 +13,13 @@ export default class Sea {
   }
 
   setGeometry() {
-    this.geom = new THREE.CylinderGeometry(600, 600, 800, 40, 10);
-    this.geom.applyMatrix4(new THREE.Matrix4().makeRotationX(-Math.PI / 2));
+    this.geometry = new THREE.CylinderGeometry(600, 600, 800, 40, 10);
+    this.geometry.applyMatrix4(new THREE.Matrix4().makeRotationX(-Math.PI / 2));
   }
 
   setMaterial() {
     // create the material
-    this.mat = new THREE.MeshPhongMaterial({
+    this.material = new THREE.MeshPhongMaterial({
       color: colors.blue,
       transparent: true,
       opacity: 0.6,
@@ -30,8 +30,7 @@ export default class Sea {
   setMesh() {
     // To create an object in Three.js, we have to create a mesh
     // which is a combination of a geometry and some material
-    this.mesh = new THREE.Mesh(this.geom, this.mat);
-
+    this.mesh = new THREE.Mesh(this.geometry, this.material);
     // Allow the sea to receive shadows
     this.mesh.receiveShadow = true;
     this.mesh.position.y = -600;

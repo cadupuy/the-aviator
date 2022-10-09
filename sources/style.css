@@ -10,8 +10,40 @@ body {
 
 .webgl {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
   outline: none;
   background: linear-gradient(#e4e0ba, #f7d9aa);
+}
+
+.header {
+  position: absolute;
+  top: 8vh;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.replay {
+  position: absolute;
+  text-transform: uppercase;
+  z-index: 1;
+  left: 50%;
+  bottom: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.footer {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  bottom: 10%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.footer__content {
+  text-transform: uppercase;
 }

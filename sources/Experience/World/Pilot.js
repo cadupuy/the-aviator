@@ -11,8 +11,8 @@ export default class AirPlane {
   }
 
   setMesh() {
-    this.mesh = new THREE.Object3D();
-    this.mesh.name = 'pilot';
+    this.group = new THREE.Group();
+    this.group.name = 'pilot';
 
     // angleHairs is a property used to animate the hair later
     this.angleHairs = 0;
@@ -25,13 +25,13 @@ export default class AirPlane {
     });
     const body = new THREE.Mesh(bodyGeom, bodyMat);
     body.position.set(2, -12, 0);
-    this.mesh.add(body);
+    this.group.add(body);
 
     // Face of the pilot
     const faceGeom = new THREE.BoxGeometry(10, 10, 10);
     const faceMat = new THREE.MeshLambertMaterial({ color: colors.pink });
     const face = new THREE.Mesh(faceGeom, faceMat);
-    this.mesh.add(face);
+    this.group.add(face);
 
     // Hair element
     const hairGeom = new THREE.BoxGeometry(4, 4, 4);
@@ -41,11 +41,11 @@ export default class AirPlane {
     hair.geometry.applyMatrix4(new THREE.Matrix4().makeTranslation(0, 2, 0));
 
     // create a container for the hair
-    const hairs = new THREE.Object3D();
+    const hairs = new THREE.Group();
 
     // create a container for the hairs at the top
     // of the head (the ones that will be animated)
-    this.hairsTop = new THREE.Object3D();
+    this.hairsTop = new THREE.Group();
 
     // create the hairs at the top of the head
     // and position them on a 3 x 4 grid
@@ -77,7 +77,7 @@ export default class AirPlane {
     hairs.add(hairBack);
     hairs.position.set(-5, 5, 0);
 
-    this.mesh.add(hairs);
+    this.group.add(hairs);
 
     const glassGeom = new THREE.BoxGeometry(5, 5, 5);
     const glassMat = new THREE.MeshLambertMaterial({ color: colors.brown });
@@ -88,19 +88,19 @@ export default class AirPlane {
 
     const glassAGeom = new THREE.BoxGeometry(11, 1, 11);
     const glassA = new THREE.Mesh(glassAGeom, glassMat);
-    this.mesh.add(glassR);
-    this.mesh.add(glassL);
-    this.mesh.add(glassA);
+    this.group.add(glassR);
+    this.group.add(glassL);
+    this.group.add(glassA);
 
     const earGeom = new THREE.BoxGeometry(2, 3, 2);
     const earL = new THREE.Mesh(earGeom, faceMat);
     earL.position.set(0, 0, -6);
     const earR = earL.clone();
     earR.position.set(0, 0, 6);
-    this.mesh.add(earL);
-    this.mesh.add(earR);
+    this.group.add(earL);
+    this.group.add(earR);
 
-    this.scene.add(this.mesh);
+    this.scene.add(this.group);
   }
 
   update() {

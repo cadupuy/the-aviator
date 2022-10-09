@@ -7,6 +7,7 @@ import Camera from './Camera.js';
 import Renderer from './Renderer.js';
 import World from './World/World.js';
 import Resources from './Utils/Resources.js';
+import Stats from './Utils/Stats.js';
 
 import sources from './sources.js';
 
@@ -27,16 +28,15 @@ export default class Experience {
     this.canvas = _canvas;
 
     // Setup
-    this.debug = new Debug();
     this.sizes = new Sizes();
     this.time = new Time();
-    this.scene = new THREE.Scene();
-    this.scene.fog = new THREE.Fog(0xf7d9aa, 100, 950);
-
-    this.resources = new Resources(sources);
-    this.camera = new Camera();
-    this.renderer = new Renderer();
-    this.world = new World();
+    this.setDebug();
+    this.setStats();
+    this.setScene();
+    this.setCamera();
+    this.setRenderer();
+    this.setResources();
+    this.setWorld();
 
     // Resize event
     this.sizes.on('resize', () => {
@@ -49,15 +49,48 @@ export default class Experience {
     });
   }
 
+  setDebug() {
+    this.debug = new Debug();
+  }
+
+  setStats() {
+    this.stats = new Stats();
+  }
+
+  setScene() {
+    this.scene = new THREE.Scene();
+    this.scene.fog = new THREE.Fog(0xf7d9aa, 100, 950);
+  }
+
+  setCamera() {
+    this.camera = new Camera();
+  }
+
+  setRenderer() {
+    this.renderer = new Renderer();
+  }
+
+  setResources() {
+    this.resources = new Resources(sources);
+  }
+
+  setWorld() {
+    this.world = new World();
+  }
+
   resize() {
     this.camera.resize();
     this.renderer.resize();
   }
 
   update() {
+    if (this.stats) this.stats.update();
+
     this.camera.update();
-    this.world.update();
-    this.renderer.update();
+
+    if (this.world) this.world.update();
+
+    if (this.renderer) this.renderer.update();
   }
 
   destroy() {

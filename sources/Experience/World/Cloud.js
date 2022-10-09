@@ -27,7 +27,7 @@ export default class Cloud {
 
   setMesh() {
     // Create an empty container that will hold the different parts of the cloud
-    this.mesh = new THREE.Object3D();
+    this.group = new THREE.Group();
 
     // duplicate the geometry a random number of times
     const nBlocs = 3 + Math.floor(Math.random() * 3);
@@ -51,7 +51,7 @@ export default class Cloud {
       mesh.receiveShadow = true;
 
       // add the cube to the container we first created
-      this.mesh.add(mesh);
+      this.group.add(mesh);
     }
   }
 }
